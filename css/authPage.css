@@ -26,7 +26,19 @@ body {
     background: #ffffff;
 }
 
+#container_createAccount{
+    width: 400px;
+    max-width: 400px;
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    background: #ffffff;
+}
+
 .container,
+.greyContainer,
+.container_createAccount,
 .form__input,
 .form__button {
     font: 500 1rem 'Quicksand', sans-serif;
@@ -83,6 +95,22 @@ body {
     background: #ffffff;
 }
 
+.form__input__chat {
+    width: 75%;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.form__input__chat:focus {
+    border-color: var(--color-primary);
+    background: #ffffff;
+}
+
 .form__input--error {
     color: var(--color-error);
     border-color: var(--color-error);
@@ -112,6 +140,26 @@ body {
 }
 
 .form__button:active {
+    transform: scale(0.98);
+}
+
+.form__button__send {
+    padding: 1rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffffff;
+    border: none;
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
+    background: var(--color-primary);
+}
+
+.form__button__send:hover {
+    background: var(--color-primary-dark);
+}
+
+.form__button__send:active {
     transform: scale(0.98);
 }
 
@@ -149,3 +197,70 @@ body {
 .form__link:hover {
     text-decoration: underline;
 }
+
+
+
+#messages{
+    list-style: none;
+}
+
+li{
+    width: 90%;
+    background-color: white;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    align-self: center;
+}
+
+#message_sender{
+    align-content: center;
+    width: auto;
+    position: absolute;
+    bottom: 2%;
+}
+
+#flexDiv{
+    display: flex;
+}
+
+.MyTitle{
+    text-align: center;
+}
+
+#greyContainer {
+    align-content: center;
+    height: 92%;
+    width: 500px;
+    max-width: 500px;
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    border: 2px solid black;
+    background: #DBE5ED;
+}
+
+.textLike__button {
+    width: 100%;
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    border: none;
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
+    background: white;
+}
+
+.textLike__button:hover {
+    text-decoration: underline;
+}
+
+.textLike__button:active {
+    transform: scale(0.98);
+}
+
+
+
