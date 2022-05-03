@@ -167,7 +167,11 @@ function postChat(e) {
   if(!messageAmount){
     messageAmount = 0;
   }
-
+  const fetchChat = database.ref("groups/");
+  fetchChat.on("child_added", function (snapshot) {
+    const messages = snapshot.val();
+    messageAmount = messages.messages.val();
+    });
   database.ref("groups/"+user.uid+"/messages/"+ messageAmount + "/").set({
     msOrder: messageAmount,
     user: email,
@@ -222,8 +226,12 @@ const fetchChat = database.ref("groups/");
 fetchChat.on("child_added", function (snapshot) {
   const messages = snapshot.val();
   var count = Object.keys(messages.messages).length;
-  const msg = "<li>" + messages.messages[count-1].user + " : " + messages.messages[count-1].msg + "</li>";
-  document.getElementById("messages").innerHTML += msg;
+  var msg;
+  for(var i = 0; i < count; i++){
+    msg = "<li>" + messages.messages[i].user + " : " + messages.messages[i].msg + "</li>";
+    document.getElementById("messages").innerHTML += msg;
+  }
+
 });
 
 //-- This Good
