@@ -167,11 +167,7 @@ function postChat(e) {
   if(!messageAmount){
     messageAmount = 0;
   }
-  const fetchChat = database.ref("groups/");
-  fetchChat.on("child_added", function (snapshot) {
-    const messages = snapshot.val();
-    messageAmount = messages.messages.val();
-    });
+
   database.ref("groups/"+user.uid+"/messages/"+ messageAmount + "/").set({
     msOrder: messageAmount,
     user: email,
