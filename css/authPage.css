@@ -16,6 +16,70 @@ body {
     background-size: cover;
 }
 
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  padding: 20px;
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+#massiveContainer{
+    display: flex;
+}
+
 #container {
     width: 400px;
     max-width: 400px;
@@ -222,25 +286,144 @@ li{
     bottom: 2%;
 }
 
-#flexDiv{
-    display: flex;
-}
-
 .MyTitle{
     text-align: center;
 }
 
 #greyContainer {
     align-content: center;
-    height: 92%;
-    width: 500px;
-    max-width: 500px;
-    margin: 1rem;
+    height: 100%;
+    width: 62.5%;
+    margin: 0px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    border: 2px solid grey;
+    background: #DBE5ED;
+}
+#greyContainerTop {
+    background: white;
+}
+#greyContainerLeft {
+    align-content: center;
+    height: 100%;
+    width: 35%;
     padding: 2rem;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
     border-radius: var(--border-radius);
-    border: 2px solid black;
-    background: #DBE5ED;
+    background: white;
+}
+#greyContainerLeftTop {
+    align-content: center;
+    background: white;
+}
+#greyContainerLeftTopInner{
+    display: flex;
+    background: white;
+}
+#greyContainerRight {
+    align-content: center;
+    height: 100%;
+    width: 5%;
+    margin: 0px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    background: white;
+}
+#fetchChats {
+    background: red;
+}
+
+h3.activeChat{
+    margin-right: auto;
+}
+
+button {
+  background-color: #DBE5ED;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: 2px solid grey;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+
+button.buttonPlus{
+  background-color: #DBE5ED;
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+  width: 10%;
+  border-radius: var(--border-radius);
+}
+button.buttonCircleRed{
+  margin-left: 25%;
+  margin-right: auto;
+  padding: 20px;
+  background-color: red;
+  border: 1px solid black;
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+}
+button.buttonCircleGreen{
+  margin-left: 25%;
+  margin-right: auto;
+  padding: 20px;
+  background-color: #04AA6D;
+  border: 1px solid black;
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+}
+
+button.buttonSend{
+  background-color: #4bb544;
+  color: white;
+  border: 1px solid black;
+  cursor: pointer;
+  width: 10%;
+  border-radius: var(--border-radius);
+}
+
+
+button.buttonLogOut{
+  background-color: red;
+  margin-top: 1rem;
+  color: white;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+}
+
+img.logo{
+    padding-top: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+}
+
+#flexDiv{
+    display: flex;
+}
+
+input.enterMessageField {
+    width: 915px;
+    padding: 0.75rem;
+    border: 1px solid grey;
+    outline: none;
+    background: white;
+    border-radius: var(--border-radius);
+}
+
+.enterMessageField:focus {
+    border-color: var(--color-primary);
+    background: #ffffff;
 }
 
 .textLike__button {
@@ -261,6 +444,5 @@ li{
 .textLike__button:active {
     transform: scale(0.98);
 }
-
 
 

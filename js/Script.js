@@ -1,3 +1,4 @@
+
 const firebaseConfig = {
     apiKey: "AIzaSyCPMUGPrljaQhxxnV8cij4FaKTk1CQKYzY",
     authDomain: "jaichat-1c155.firebaseapp.com",
@@ -16,6 +17,8 @@ firebase.auth().onAuthStateChanged(function(user){
   if(user){
     document.getElementById("chat").style.display = "initial";
     document.getElementById("greyContainer").style.display = "initial";
+    document.getElementById("greyContainerLeft").style.display = "initial";
+    document.getElementById("greyContainerRight").style.display = "initial";
     document.getElementById("container").style.display = "none";
     document.getElementById("container_createAccount").style.display = "none";
 
@@ -30,6 +33,8 @@ firebase.auth().onAuthStateChanged(function(user){
     document.getElementById("chat").style.display = "none";
     document.getElementById("container").style.display = "initial";
     document.getElementById("greyContainer").style.display = "none";
+    document.getElementById("greyContainerLeft").style.display = "none";
+    document.getElementById("greyContainerRight").style.display = "none";
     document.getElementById("container_createAccount").style.display = "none";
   }
 });
@@ -38,6 +43,8 @@ function tapped_dontHaveAccount(){
   document.getElementById("chat").style.display = "none";
   document.getElementById("container").style.display = "none";
   document.getElementById("greyContainer").style.display = "none";
+  document.getElementById("greyContainerLeft").style.display = "none";
+    document.getElementById("greyContainerRight").style.display = "none";
   document.getElementById("container_createAccount").style.display = "initial";
 };
 
@@ -45,6 +52,8 @@ function tapped_alreadyHaveAccount(){
   document.getElementById("chat").style.display = "none";
   document.getElementById("container").style.display = "initial";
   document.getElementById("greyContainer").style.display = "none";
+  document.getElementById("greyContainerLeft").style.display = "none";
+  document.getElementById("greyContainerRight").style.display = "none";
   document.getElementById("container_createAccount").style.display = "none";
 };
 
@@ -128,6 +137,23 @@ function logOut() {
   });
 }
 
+var modal = document.getElementById('groupFormDiv');
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function showLog(){
+  document.getElementById('groupFormDiv').style.display='block'
+}
+
+function hideLog(){
+    document.getElementById('groupFormDiv').style.display='none'
+}
+
+
+
 document.getElementById("send-message").addEventListener("submit", postChat);
 function postChat(e) {
   e.preventDefault();
@@ -137,19 +163,93 @@ function postChat(e) {
   const chatTxt = document.getElementById("chat-txt");
   const message = chatTxt.value;
   chatTxt.value = "";
-  database.ref("messages/" + timestamp).set({
+  var messageAmount = getCount();
+  if(!messageAmount){
+    messageAmount = 0;
+  }
+  const fetchChat = database.ref("groups/");
+  fetchChat.on("child_added", function (snapshot) {
+    const messages = snapshot.val();
+    messageAmount = messages.messages.val();
+    });
+  database.ref("groups/"+user.uid+"/messages/"+ messageAmount + "/").set({
+    msOrder: messageAmount,
     user: email,
     msg: message,
+    time: timestamp
   });
+
+  database.ref("groups/"+user.uid +"/lastMsg").set({
+    lastMsg: message,
+  });
+
+
 }
 
-const fetchChat = database.ref("messages/");
+
+
+document.getElementById("createGroupForm").addEventListener("submit", createGroupChat);
+function createGroupChat(e){
+  e.preventDefault();
+  var user = auth.currentUser;
+  var email = user.email;
+  const timestamp = Date.now();
+  var otherUser = document.getElementById("createGroup-email").value;
+  var name = email + "+" + otherUser;
+
+  var isGood = validate(otherUser);
+  var isThere = validate(otherUser);
+
+  if(isGood == true){
+    database.ref("groups/" + user.uid +"/").set({
+    groupName: name,
+    sender: email,
+    reciever: otherUser,
+    time: timestamp,
+  });
+  }else{
+    alert("Email is not registered.");
+  }
+}
+
+function getCount(){
+  var count;
+  const fetchChat = database.ref("groups/");
+  fetchChat.on("child_added", function (snapshot) {
+    const messages = snapshot.val();
+    count = Object.keys(messages.messages).length;
+  });
+  return count;
+}
+
+const fetchChat = database.ref("groups/");
 fetchChat.on("child_added", function (snapshot) {
   const messages = snapshot.val();
-  const msg = "<li>" + messages.user + " : " + messages.msg + "</li>";
+  var count = Object.keys(messages.messages).length;
+  const msg = "<li>" + messages.messages[count-1].user + " : " + messages.messages[count-1].msg + "</li>";
   document.getElementById("messages").innerHTML += msg;
 });
 
+//-- This Good
+const fetchGroupChats = database.ref("groups/");
+fetchGroupChats.on("child_added", function (snapshot) {
+  const username = snapshot.val();
+  const chats = "<button>" + username.reciever + "<br>" + username.lastMsg.lastMsg+ "</button>";
+  document.getElementById("groupChats").innerHTML += chats;
+});
+
+function validate(email) {
+  var isThere = false;
+  const fetchChat = database.ref("users/");
+    fetchChat.on("child_added", function (snapshot) {
+    const user = snapshot.val();
+    if(user.email == email){
+      isThere = true;
+    }
+  });
+    return isThere;
+    
+}
 
 function validate_email(email) {
   expression = /^[^@]+@\w+(\.\w+)+\w$/
