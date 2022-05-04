@@ -268,17 +268,6 @@ input[type=text], input[type=password] {
     list-style: none;
 }
 
-li{
-    width: 90%;
-    background-color: white;
-    border: 2px solid black;
-    margin-bottom: 5px;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    text-align: center;
-    align-self: center;
-}
-
 #message_sender{
     align-content: center;
     width: auto;
@@ -299,18 +288,20 @@ li{
     border-radius: var(--border-radius);
     border: 2px solid grey;
     background: #DBE5ED;
+    overflow: scroll;
 }
 #greyContainerTop {
     background: white;
 }
 #greyContainerLeft {
     align-content: center;
-    height: 100%;
+    height: 93%;
     width: 35%;
     padding: 2rem;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
     border-radius: var(--border-radius);
     background: white;
+    overflow: scroll;
 }
 #greyContainerLeftTop {
     align-content: center;
@@ -328,6 +319,7 @@ li{
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
     border-radius: var(--border-radius);
     background: white;
+    overflow: scroll;
 }
 #fetchChats {
     background: red;
@@ -406,6 +398,29 @@ img.logo{
     margin-left: auto;
     margin-right: auto;
     width: 10%;
+}
+
+li.receivedMessage{
+    width: 40%;
+    background-color: white;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    align-self: center;
+    border-radius: var(--border-radius);
+}
+li.sentMessage{
+    width: 40%;
+    background-color: #76C00D; 
+    border: 2px solid black;
+    margin-bottom: 5px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    margin-left: 55%;
+    border-radius: var(--border-radius);
 }
 
 #flexDiv{
