@@ -169,37 +169,40 @@ function postChat(e) {
   if(!messageAmount){
     messageAmount = 0;
   }
-  var name;
-  
-  const fetchChat = database.ref("users/" + emails+"/groups");
-  fetchChat.on("child_added", function (snapshot) {
-    const messages = snapshot.val();
-    name = messages;
-    alert(name);
-  });
-  var charal = emails + "=";
-  var otherEmail = name.replace(charal, "");
 
-  
+  var fetchChat = database.ref("users/" + emails + "/");
+  fetchChat.once("value").then( function (snapshot) {
+    var messages = snapshot.key;
+    name = snapshot.child("groups/groupID").val();
 
-  database.ref("users/" + emails +"/groups/"+name+"/messages/"+ messageAmount + "/").set({
-    msOrder: messageAmount,
-    user: email,
-    msg: message,
-    time: timestamp
+    var charal = emails + "=";
+    var charal2 = "=" + emails;
+    var otherEmail = name.replace(charal, "");
+    otherEmail = otherEmail.replace(charal2, "");
+
+      database.ref("users/" + emails +"/groups/messages/"+ messageAmount + "/").set({
+        msOrder: messageAmount,
+        user: email,
+        msg: message,
+        time: timestamp
+      });
+
+      database.ref("users/" + otherEmail +"/groups/messages/"+ messageAmount + "/").set({
+        msOrder: messageAmount,
+        user: email,
+        msg: message,
+        time: timestamp
+      });
+
+      database.ref("groups/"+emails +"/groups" ).set({
+        lastMsg: message,
+      });
+
   });
 
-  database.ref("users/" + otherEmail +"/groups/"+name+"/messages/"+ messageAmount + "/").set({
-    msOrder: messageAmount,
-    user: email,
-    msg: message,
-    time: timestamp
-  });
 
-  database.ref("groups/"+user.uid +"/lastMsg").set({
-    lastMsg: message,
-  });
 }
+
 
 
 
@@ -239,33 +242,34 @@ function createGroupChat(e){
 
 function getCount(){
   var count;
-  const fetchChat = database.ref("groups/");
+  var user = auth.currentUser;
+  var email = user.email;
+  var emails = emailStrip(email);
+  const fetchChat = database.ref("users/" + emails);
   fetchChat.on("child_added", function (snapshot) {
     const messages = snapshot.val();
     count = Object.keys(messages.messages).length;
   });
   return count;
 }
+msg = "<li class=\"sentMessage\"> albert@gmail.com : Hello </li>";
+  document.getElementById("messages").innerHTML += msg;
+  msg = "<li class=\"receivedMessage\"> ian@gmail.com : How is it going? </li>";
+  document.getElementById("messages").innerHTML += msg;
 
-const fetchChat = database.ref("groups/");
+const fetchChat = database.ref("users/");
 fetchChat.on("child_added", function (snapshot) {
-  const messages = snapshot.val();
-  var count = Object.keys(messages.messages).length;
-  var msg;
-  var msgClass;
-  
+  var userG = auth.currentUser;
+  var emailG = userG.email;
+  var emailsG = emailStrip(emailG);
 
-  for(var i = 0; i < count; i++){
-    
-    msg = "<li class = receivedMessage>" + messages.messages[i].user + " : " + messages.messages[i].msg + "</li>";
-    document.getElementById("messages").innerHTML += msg;
-  }
+
 
 
 });
-
-//-- This Good
-const fetchGroupChats = database.ref("groups/");
+const chats = "<button> itracy@gmail.com <br> How is it going? </button>";
+  document.getElementById("groupChats").innerHTML += chats;
+const fetchGroupChats = database.ref("users/" + emailsG);
 fetchGroupChats.on("child_added", function (snapshot) {
   const username = snapshot.val();
   const chats = "<button>" + username.reciever + "<br>" + username.lastMsg.lastMsg+ "</button>";
@@ -281,7 +285,7 @@ function emailStrip(email){
 
 function validate(email) {
   var isThere = false;
-  const fetchChat = database.ref("users/");
+  const fetchChat = database.ref("users/" + emailsG +"/groups/");
     fetchChat.on("child_added", function (snapshot) {
     const user = snapshot.val();
     if(user.email == email){
