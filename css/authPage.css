@@ -424,6 +424,32 @@ li.sentMessage{
     border-radius: var(--border-radius);
 }
 
+img.sentPhoto{
+    width: 40%;
+    height: 10%;
+    height: auto;
+    background-color: #76C00D; 
+    border: 2px solid black;
+    margin-bottom: 5px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    margin-left: 55%;
+    border-radius: var(--border-radius);
+}
+img.receivedPhoto{
+    width: 40%;
+    height: 10%;
+    background-color: white;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    align-self: center;
+    border-radius: var(--border-radius);
+}
+
 #flexDiv{
     display: flex;
 }

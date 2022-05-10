@@ -13,6 +13,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 const auth = firebase.auth();
 
+
 firebase.auth().onAuthStateChanged(function(user){
   if(user){
     document.getElementById("chat").style.display = "initial";
@@ -252,29 +253,66 @@ function getCount(){
   });
   return count;
 }
-msg = "<li class=\"sentMessage\"> albert@gmail.com : Hello </li>";
-  document.getElementById("messages").innerHTML += msg;
-  msg = "<li class=\"receivedMessage\"> ian@gmail.com : How is it going? </li>";
-  document.getElementById("messages").innerHTML += msg;
-
-const fetchChat = database.ref("users/");
-fetchChat.on("child_added", function (snapshot) {
+ 
+function returnEmail(){
   var userG = auth.currentUser;
   var emailG = userG.email;
   var emailsG = emailStrip(emailG);
 
+  return emailsG;
+}
+
+var el = "albert_gmail-com";
+
+var foo = returnEmail();
+
+
+var fetchChat = database.ref("users/" + el  + "/groups/messages/" );
+fetchChat.on("child_added", function (snapshot) {
+  
+  var userG = auth.currentUser;
+  var emailG = userG.email;
+  var emailsG = emailStrip(emailG);
+  var user = snapshot.val();
+  var msg;
+
+  var sender = emailStrip(user.user);
+  if(sender == emailsG){
+    msg = "<li class=\"sentMessage\"> " + user.user+" : "+user.msg + " </li>";
+    document.getElementById("messages").innerHTML += msg;
+  }else{
+    msg = "<li class=\"receivedMessage\"> " + user.user+" : "+user.msg + " </li>";
+    document.getElementById("messages").innerHTML += msg;
+  }
 
 
 
 });
-const chats = "<button> itracy@gmail.com <br> How is it going? </button>";
-  document.getElementById("groupChats").innerHTML += chats;
-const fetchGroupChats = database.ref("users/" + emailsG);
+
+
+const fetchGroupChats = database.ref("users/albert_gmail-com/");
 fetchGroupChats.on("child_added", function (snapshot) {
   const username = snapshot.val();
-  const chats = "<button>" + username.reciever + "<br>" + username.lastMsg.lastMsg+ "</button>";
-  document.getElementById("groupChats").innerHTML += chats;
+  if(username.reciever != "undefined"){
+    const chats = "<button id = groupButton>" + revEmailStrip(username.reciever) + "</button>";
+    document.getElementById("groupChats").innerHTML += chats;
+  }
+  
 });
+
+document.getElementById("groupButton").addEventListener("click", updateGroup);
+
+function updateGroup(){
+  const updateGroup = database.ref("users/albert_gmail-com/");
+  updateGroup.on(function (snapshot) {
+    var username = snapshot.val();
+    
+    var chats = revEmailStrip(username.reciever);
+    document.getElementById("headerEmail").innerHTML += chats;
+    
+  
+  });
+}
 
 function emailStrip(email){
   var emails = email.replace("@", "_");
@@ -282,6 +320,14 @@ function emailStrip(email){
 
   return emails;
 }
+
+function revEmailStrip(email){
+  var emails = email.replace("_", "@");
+  var emails = emails.replace("-", ".");
+
+  return emails;
+}
+
 
 function validate(email) {
   var isThere = false;
