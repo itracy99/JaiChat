@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>JaiChat Log In</title>
+        <title>JaiChat</title>
         <link rel="stylesheet" type="text/css" href="css/authPage.css">
     </head>
     <body>
@@ -61,31 +61,76 @@
                 </p>
             </div>
         </div>
+
+        <div id="greyContainerLeft">
+            <div id="greyContainerLeftTop">
+                <img src="images/logo.png" class="logo">
+                <p class="MyTitle" id="user_para"></p> 
+            </div>
+
+            <div id="greyContainerLeftTopInner">
+                <h3 class="activeChat">Active Chats</h3> 
+                <button onclick="showLog()" class="buttonPlus">+</button>
+            </div>
+
+            <div id="groupChats">
+                <ul id="groupChats" class="msgs"></ul>
+            <div id="message_sender">
+            </div>    
+            </div>
+        </div>
         <div id="greyContainer">
-            <div id="chat">
-            <h1 class="MyTitle" id="user_para"></h1>  
+            <div id="greyContainerTop">
+                <h3 id="headerEmail"></h3>
+            </div>
+            <div id="chat"> 
             <div class="gravity"></div>
-                <ul id="messages" class="msgs"></ul>
+            <ul id="messages" class="msgs"></ul>
+                
             <div id="message_sender">
                 <form id="send-message">
                     <div id="flexDiv">
                       <input id="chat-txt" 
-                          type="text" class="form__input" 
+                          type="text" class="enterMessageField" 
                           placeholder="Enter a Message...">
                       <button 
                           id="chat-btn" 
                           type="submit" 
-                          class="form__button__send">Send</button>
+                          class="buttonSend">Send</button>
                     </div>
-                      <button 
-                          id="chat-btn" 
-                          type="submit" 
-                          class="form__button__red"
-                          onclick="logOut()" >Log Out</button>
                 </form> 
             </div>    
             </div>
         </div>
+
+        <div id="greyContainerRight">
+            <div id="greyContainerTop">
+                <button id="chat-btn" 
+                    type="submit" 
+                    class="buttonLogOut"
+                    onclick="logOut()" >Log Out
+                </button>
+
+            </div>
+            
+        </div>
+
+        <div id="groupFormDiv" class="modal">
+          <form class="modal-content animate" id="createGroupForm">
+            <span onclick="hideLog()" class="close" title="Close Modal">&times;</span>
+              <div class="container">
+                <label for="createGroup-email"><b>Enter Email: </b></label>
+                <input type="text" placeholder="email..." 
+                name="createGroup-email" id="createGroup-email" required>
+                  
+                <button type="submit" onclick="createGroupChat()" 
+                id="groupChatSubmit">Create Chat</button>
+
+              </div>
+          </form>
+        </div>
+
+
     </body>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
